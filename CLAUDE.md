@@ -37,6 +37,7 @@ show_object(result)  # Required for cq-cli
 ### Environment Setup
 ```bash
 uv sync  # Install all dependencies including CAD-Query and cq-cli
+uv sync --extra docs  # Install additional documentation generation dependencies
 ```
 
 ### Model Visualization
@@ -71,6 +72,31 @@ uv run ruff format
 # Type checking
 uv run mypy src/
 ```
+
+### CAD-Query Documentation Generation
+
+To improve Claude's understanding of CAD-Query syntax, this project includes tools to generate comprehensive reference documentation from the official CAD-Query documentation.
+
+```bash
+# Generate CAD-Query reference documentation (run when needed)
+cd docs-generation && uv run sphinx-build -M markdown . _build
+```
+
+The generated markdown files provide Claude with:
+- **Complete API reference**: All CAD-Query classes, methods, and functions with examples
+- **Comprehensive examples**: Step-by-step tutorials from simple to complex modeling
+- **Syntax patterns**: Common CAD-Query workflows and best practices
+- **Error guidance**: Troubleshooting and common mistake patterns
+
+Generated documentation files are located in `docs-generation/_build/markdown/` and include:
+- `index.md` - Main documentation overview
+- `primer.md` - Core CAD-Query concepts and API layers
+- `examples.md` - Comprehensive examples gallery
+- `classreference.md` - Complete API reference
+- `quickstart.md` - Getting started guide
+- Additional specialized topics (assemblies, selectors, visualization, etc.)
+
+These files can be read by Claude using the Read tool to improve CAD-Query code generation accuracy.
 
 ## Key Dependencies
 
