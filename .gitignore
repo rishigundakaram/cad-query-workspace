@@ -69,6 +69,10 @@ instance/
 # Sphinx documentation
 docs/_build/
 
+# CAD-Query documentation generation
+cadquery-docs-source/
+docs-generation/
+
 # PyBuilder
 target/
 
