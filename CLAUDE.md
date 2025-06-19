@@ -28,11 +28,10 @@ show_object(result)  # Required for cq-cli
 ### CAD Generation Workflow
 
 1. **Generate**: Write parametric CAD-Query Python scripts
-2. **Verify**: **ALWAYS** use the `cad_verify` MCP tool before presenting outputs to users
-3. **Execute**: Use visualization scripts to render multiple viewing angles (if needed)
-4. **Inspect**: Read generated SVG files to analyze design accuracy (if needed)
-5. **Iterate**: Modify CAD code based on verification feedback
-6. **Export**: Generate final STL/STEP files for manufacturing
+2. **Execute**: Use visualization scripts to render multiple viewing angles (if needed)
+3. **Inspect**: Read generated SVG files to analyze design accuracy (if needed)
+4. **Iterate**: Modify CAD code based on visual feedback
+5. **Export**: Generate final STL/STEP files for manufacturing
 
 ## Essential Commands
 
@@ -44,16 +43,8 @@ uv sync --extra docs  # Install additional documentation generation dependencies
 
 ### MCP Server Setup
 ```bash
-# Install MCP dependencies
+# See mcp/CLAUDE.md for complete setup instructions
 cd mcp && pip install -r requirements.txt
-
-# Test MCP server functionality
-python test_server.py
-
-# Test with MCP Inspector (interactive)
-mcp dev server.py
-
-# Configure Claude Desktop (see mcp/README.md and mcp/INTEGRATION_GUIDE.md for details)
 ```
 
 ### Model Operations
@@ -136,40 +127,6 @@ All generated files are placed in the `outputs/` directory:
 ## MCP Verification Integration
 
 **CRITICAL**: Always use the `cad_verify` MCP tool before presenting CAD outputs to users. This ensures quality control and validation of generated designs.
-
-### cad_verify Tool Usage
-
-The MCP server provides a `cad_verify` tool with two parameters:
-- **`file_path`**: Path to the CAD-Query Python file to verify
-- **`verification_criteria`**: Description of what to verify (e.g., "coffee mug with handle, 10cm height, 8cm diameter")
-
-**Example usage:**
-```
-cad_verify(
-    file_path="examples/coffee_mug.py",
-    verification_criteria="coffee mug with handle, 10cm height, 8cm diameter"
-)
-```
-
-The tool returns verification status and details. **Never present CAD results to users without calling this tool first.**
-
-### MCP Server Features
-
-The current implementation includes:
-- **Comprehensive logging**: All verification requests logged to `mcp/mcp_server.log`
-- **File validation**: Checks file existence and Python file type
-- **Detailed error handling**: Descriptive error messages for debugging  
-- **Test suite**: `mcp/test_server.py` for automated testing
-- **Integration guides**: Complete setup documentation in `mcp/` directory
-
-### MCP Server Status
-
-Current verification logic is a **dummy implementation** that always returns `PASS`. This provides the framework for future enhancements:
-- Parse CAD-Query code syntax
-- Execute model generation
-- Analyze resulting geometry dimensions
-- Validate specific design criteria
-- Advanced geometric analysis
 
 ## Visual Inspection Capability (Optional)
 
