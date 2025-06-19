@@ -42,7 +42,7 @@ def main() -> bool:
             "--outfile",
             str(output_file),
             "--outputopts",
-            f"projectionDir:{direction};width:400;height:400",
+            f"projectionDir:{direction};width:800;height:800",
         ]
 
         try:
