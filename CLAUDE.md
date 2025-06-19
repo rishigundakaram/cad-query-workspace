@@ -8,9 +8,10 @@ This is an AI-powered CAD system that enables conversational 3D modeling using C
 
 ## Architecture
 
-The system consists of two primary visualization scripts that wrap CAD-Query's `cq-cli` tool:
+The system integrates MCP (Model Context Protocol) for automated CAD verification and includes visualization scripts that wrap CAD-Query's `cq-cli` tool:
 
-- **`src/ai_3d_print/render_views.py`** - Generates 4 standard orthographic views (top, front, right, isometric) for comprehensive model inspection
+- **`mcp/server.py`** - MCP server providing the `cad_verify` tool for automated model validation
+- **`src/ai_3d_print/render_views.py`** - Generates 4 standard orthographic views (top, front, right, isometric) for comprehensive model inspection  
 - **`src/ai_3d_print/view_direction.py`** - Creates custom angle views with arbitrary direction vectors for detailed analysis
 
 ### CAD-Query Script Requirements
@@ -24,13 +25,11 @@ result = cq.Workplane("XY").box(10, 10, 10)
 show_object(result)  # Required for cq-cli
 ```
 
-### Visual Feedback Workflow
+### CAD Generation Workflow
 
 1. **Generate**: Write parametric CAD-Query Python scripts
-2. **Execute**: Use visualization scripts to render multiple viewing angles
-3. **Inspect**: Read generated SVG files to analyze design accuracy
-4. **Iterate**: Modify CAD code based on visual feedback
-5. **Export**: Generate final STL/STEP files for manufacturing
+2. **Verify**: Call the `cad_verify` MCP tool before presenting outputs to users
+3. **Iterate**: Repeat steps 1-2 until verify returns success
 
 ## Essential Commands
 
@@ -40,19 +39,25 @@ uv sync  # Install all dependencies including CAD-Query and cq-cli
 uv sync --extra docs  # Install additional documentation generation dependencies
 ```
 
-### Model Visualization
+### MCP Server Setup
 ```bash
-# Generate 4 standard orthographic views
-uv run python src/ai_3d_print/render_views.py examples/box.py
+# See mcp/CLAUDE.md for complete setup instructions
+cd mcp && pip install -r requirements.txt
+```
 
-# Generate custom angle view (x, y, z direction vector)
-uv run python src/ai_3d_print/view_direction.py examples/box.py 0.7 0.7 0.2
-
+### Model Operations
+```bash
 # Export STL for 3D printing
 uv run cq-cli --codec stl --infile examples/box.py --outfile outputs/model.stl
 
 # Export STEP for CAD software
 uv run cq-cli --codec step --infile examples/box.py --outfile outputs/model.step
+
+# Generate 4 standard orthographic views (optional)
+uv run python src/ai_3d_print/render_views.py examples/box.py
+
+# Generate custom angle view (optional)
+uv run python src/ai_3d_print/view_direction.py examples/box.py 0.7 0.7 0.2
 ```
 
 ### Development Commands
@@ -117,14 +122,18 @@ All generated files are placed in the `outputs/` directory:
 - `{model_name}.stl` - STL export for 3D printing
 - `{model_name}.step` - STEP export for CAD software
 
-## Visual Inspection Capability
+## MCP Verification Integration
 
-The system enables AI to perform visual feedback by reading generated SVG files. SVG files contain vector graphics showing:
-- Solid lines for visible edges (stroke="rgb(0,0,0)")
+**CRITICAL**: Always use the `cad_verify` MCP tool before presenting CAD outputs to users. This ensures quality control and validation of generated designs.
+
+## Visual Inspection Capability (Optional)
+
+When additional visual feedback is needed, the system can generate SVG files containing vector graphics:
+- Solid lines for visible edges (stroke="rgb(0,0,0)")  
 - Dashed lines for hidden edges (stroke="rgb(160,160,160)" with dash pattern)
 - Geometric paths representing the 3D model projection
 
-This allows AI to validate design intent, check dimensions, verify feature placement, and identify issues before iteration.
+This allows additional validation of design intent, dimensions, and feature placement.
 
 ## Development Workflow
 
@@ -157,3 +166,9 @@ Pre-commit hooks automatically run `./run_lint.sh` on every commit, ensuring cod
 The `./run_lint.sh` script runs all checks with the proper sequence: format → lint → type check → test. Both manual execution and pre-commit will fail if any check doesn't pass.
 
 Note: CAD-Query example scripts use `show_object()` which is provided by the CQGI execution environment.
+
+## Memories
+
+- **ALWAYS** use the `cad_verify` MCP tool before presenting any CAD model outputs to users
+- The verification tool must be called with proper file path and verification criteria describing what the user wants
+- Never tell the user you've finished generating their 3D model without calling `cad_verify` first
