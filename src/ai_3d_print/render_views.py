@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def main():
+def main() -> bool:
     if len(sys.argv) != 2:
         print("Usage: python render_views.py model.py")
         print("Example: python render_views.py examples/box.py")
@@ -26,22 +26,27 @@ def main():
         ("top", "(0,0,1)"),
         ("front", "(0,1,0)"),
         ("right", "(1,0,0)"),
-        ("iso", "(1,1,1)")
+        ("iso", "(1,1,1)"),
     ]
 
     print(f"Generating views for {script_path}...")
-    
+
     for view, direction in views:
         output_file = output_dir / f"{base_name}_{view}.svg"
         cmd = [
-            "cq-cli", "--codec", "svg",
-            "--infile", str(script_path),
-            "--outfile", str(output_file),
-            "--outputopts", f"projectionDir:{direction};width:400;height:400"
+            "cq-cli",
+            "--codec",
+            "svg",
+            "--infile",
+            str(script_path),
+            "--outfile",
+            str(output_file),
+            "--outputopts",
+            f"projectionDir:{direction};width:400;height:400",
         ]
-        
+
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            subprocess.run(cmd, capture_output=True, text=True, check=True)
             print(f"✓ Generated {output_file}")
         except subprocess.CalledProcessError as e:
             print(f"✗ Failed to generate {view} view: {e.stderr}")

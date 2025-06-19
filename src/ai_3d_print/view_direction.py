@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def main():
+def main() -> bool:
     if len(sys.argv) != 5:
         print("Usage: python view_direction.py model.py x y z")
         print("Example: python view_direction.py examples/box.py 1 1 0.5")
@@ -34,18 +34,23 @@ def main():
     output_dir.mkdir(exist_ok=True)
 
     output_file = output_dir / f"{base_name}_custom.svg"
-    
+
     cmd = [
-        "cq-cli", "--codec", "svg",
-        "--infile", str(script_path),
-        "--outfile", str(output_file),
-        "--outputopts", f"projectionDir:({x},{y},{z});width:400;height:400"
+        "cq-cli",
+        "--codec",
+        "svg",
+        "--infile",
+        str(script_path),
+        "--outfile",
+        str(output_file),
+        "--outputopts",
+        f"projectionDir:({x},{y},{z});width:400;height:400",
     ]
 
     print(f"Generating custom view from direction ({x},{y},{z})...")
-    
+
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        subprocess.run(cmd, capture_output=True, text=True, check=True)
         print(f"✓ Generated {output_file}")
         return True
     except subprocess.CalledProcessError as e:

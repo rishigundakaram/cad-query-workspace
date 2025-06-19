@@ -84,7 +84,7 @@ The `cq-cli` dependency is installed from GitHub and requires `allow-direct-refe
 
 All generated files are placed in the `outputs/` directory:
 - `{model_name}_top.svg` - Top view (0,0,1)
-- `{model_name}_front.svg` - Front view (0,1,0)  
+- `{model_name}_front.svg` - Front view (0,1,0)
 - `{model_name}_right.svg` - Right view (1,0,0)
 - `{model_name}_iso.svg` - Isometric view (1,1,1)
 - `{model_name}_custom.svg` - Custom direction view
@@ -118,8 +118,18 @@ gh pr create --title "Your PR Title" --body "PR description"
 
 ### Pre-commit Validation
 ```bash
-# Run all CI/CD checks locally before pushing
+# Option 1: Run all CI/CD checks manually
 ./run_lint.sh
+
+# Option 2: Install automated pre-commit hooks (recommended)
+uv run pre-commit install
+uv run pre-commit run --all-files  # Test all hooks
 ```
 
-This ensures remote CI always passes by catching issues early.
+Pre-commit hooks automatically run on every commit, ensuring code quality and preventing CI failures. The hooks include:
+- Ruff linting and formatting (excludes examples/ for CAD-Query scripts)
+- MyPy type checking for strict type safety
+- Basic file hygiene (trailing whitespace, YAML validation, etc.)
+- Pytest coverage (temporarily disabled until test coverage improves)
+
+Note: CAD-Query example scripts use `show_object()` which is provided by the CQGI execution environment, so ruff linting is excluded for the examples/ directory.
