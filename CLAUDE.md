@@ -129,7 +129,9 @@ uv run pre-commit run --all-files  # Test all hooks
 Pre-commit hooks automatically run on every commit, ensuring code quality and preventing CI failures. The hooks include:
 - Ruff linting and formatting (excludes examples/ for CAD-Query scripts)
 - MyPy type checking for strict type safety
+- Pytest test execution
 - Basic file hygiene (trailing whitespace, YAML validation, etc.)
-- Pytest coverage (temporarily disabled until test coverage improves)
+
+The `./run_lint.sh` script runs the same checks manually with the proper sequence: format → lint → type check → test. Both approaches will fail if any check doesn't pass.
 
 Note: CAD-Query example scripts use `show_object()` which is provided by the CQGI execution environment, so ruff linting is excluded for the examples/ directory.

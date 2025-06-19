@@ -25,12 +25,11 @@ repos:
         args: [--strict]
         files: ^src/
 
-  # Temporarily disabled until we have better test coverage
-  # - repo: local
-  #   hooks:
-  #     - id: pytest-check
-  #       name: pytest-check
-  #       entry: uv run pytest --cov=src --cov-report=term-missing --cov-fail-under=30
-  #       language: system
-  #       pass_filenames: false
-  #       always_run: true
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: uv run pytest
+        language: system
+        pass_filenames: false
+        always_run: true
