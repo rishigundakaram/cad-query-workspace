@@ -28,10 +28,8 @@ show_object(result)  # Required for cq-cli
 ### CAD Generation Workflow
 
 1. **Generate**: Write parametric CAD-Query Python scripts
-2. **Execute**: Use visualization scripts to render multiple viewing angles (if needed)
-3. **Inspect**: Read generated SVG files to analyze design accuracy (if needed)
-4. **Iterate**: Modify CAD code based on visual feedback
-5. **Export**: Generate final STL/STEP files for manufacturing
+2. **Verify**: Call the `cad_verify` MCP tool before presenting outputs to users
+3. **Iterate**: Repeat steps 1-2 until verify returns success
 
 ## Essential Commands
 
