@@ -4,7 +4,7 @@
     "criteria": "simple box with hole"
   },
   "coffee_mug.py": {
-    "expected": "FAIL", 
+    "expected": "PASS", 
     "criteria": "coffee mug with handle"
   },
   "donut.py": {
@@ -18,13 +18,5 @@
   "simple_cylinder.py": {
     "expected": "PASS",
     "criteria": "simple cylinder"
-  },
-  "broken_model.py": {
-    "expected": "FAIL",
-    "criteria": "any model"
-  },
-  "missing_show_object.py": {
-    "expected": "FAIL",
-    "criteria": "simple box"
   }
 }

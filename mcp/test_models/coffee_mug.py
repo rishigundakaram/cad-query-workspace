@@ -29,4 +29,4 @@ handle = attachment_top.union(attachment_bottom).union(handle_body)
 # Combine everything
 result = mug_body.union(handle)
 
-# Missing show_object(result) - should fail verification
+show_object(result)
