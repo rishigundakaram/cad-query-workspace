@@ -67,26 +67,14 @@ def cad_verify(file_path: str, verification_criteria: str) -> dict[str, Any]:
             "criteria": verification_criteria
         }
     
-    # Read file content for logging
-    try:
-        content = path.read_text()
-        logger.debug(f"📄 File content preview: {content[:200]}...")
-    except Exception as e:
-        logger.warning(f"⚠️  Could not read file content: {e}")
-    
-    # For now, always return PASS as a dummy implementation
-    # In the future, this could:
-    # - Parse the CAD-Query code
-    # - Execute the model generation
-    # - Analyze the resulting geometry
-    # - Check dimensions, features, etc. against criteria
-    
+    # Simple dummy verification - always returns PASS
+    # In the future, this could implement actual verification logic
     result = {
         "status": "PASS",
         "message": "CAD model verification completed successfully",
         "file_path": file_path,
         "criteria": verification_criteria,
-        "details": "Dummy verification - always passes for now"
+        "details": "Dummy verification - always passes"
     }
     
     logger.info(f"✅ Verification result: {result['status']}")
