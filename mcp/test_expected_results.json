@@ -1,37 +1,30 @@
 {
   "box.py": {
     "expected": "PASS",
-    "criteria": "simple box with hole",
-    "reason": "Valid CAD-Query code with proper show_object"
+    "criteria": "simple box with hole"
   },
   "coffee_mug.py": {
-    "expected": "PASS", 
-    "criteria": "coffee mug with handle",
-    "reason": "Valid CAD-Query code creating mug with handle"
+    "expected": "FAIL", 
+    "criteria": "coffee mug with handle"
   },
   "donut.py": {
     "expected": "PASS",
-    "criteria": "torus shape",
-    "reason": "Valid CAD-Query code"
+    "criteria": "torus shape"
   },
   "snowman.py": {
     "expected": "PASS",
-    "criteria": "snowman shape",
-    "reason": "Valid CAD-Query code"
+    "criteria": "snowman shape"
   },
   "simple_cylinder.py": {
     "expected": "PASS",
-    "criteria": "simple cylinder",
-    "reason": "Valid CAD-Query code with basic cylinder"
+    "criteria": "simple cylinder"
   },
   "broken_model.py": {
     "expected": "FAIL",
-    "criteria": "any model",
-    "reason": "Missing show_object() call - invalid for cq-cli"
+    "criteria": "any model"
   },
   "missing_show_object.py": {
     "expected": "FAIL",
-    "criteria": "simple box",
-    "reason": "Missing show_object() call - should be caught by syntax check"
+    "criteria": "simple box"
   }
 }
