@@ -2,13 +2,13 @@
 <svg
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="400.0"
-   height="400.0"
+   width="800.0"
+   height="800.0"
 
 >
-    <g transform="scale(15.0, -15.0)   translate(23.333333333333336,-11.333333333333334)" stroke-width="0.06666666666666667"  fill="none">
+    <g transform="scale(30.0, -30.0)   translate(16.666666666666668,-10.666666666666666)" stroke-width="0.03333333333333333"  fill="none">
        <!-- hidden lines -->
-       <g  stroke="rgb(160,160,160)" fill="none" stroke-dasharray="0.06666666666666667,0.06666666666666667" >
+       <g  stroke="rgb(160,160,160)" fill="none" stroke-dasharray="0.03333333333333333,0.03333333333333333" >
 			<path d="M-10.0,-10.0 L-10.0,10.0 " />
 			<path d="M-10.0,-10.0 L10.0,-10.0 " />
 			<path d="M-10.0,10.0 L10.0,10.0 " />
@@ -27,5 +27,5 @@
 
        </g>
     </g>
-
+    
 </svg>

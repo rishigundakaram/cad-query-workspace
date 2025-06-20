@@ -1,0 +1,42 @@
+{
+  "box.py": {
+    "expected": "PASS",
+    "criteria": "simple box with hole"
+  },
+  "coffee_mug.py": {
+    "expected": "PASS", 
+    "criteria": "coffee mug with handle"
+  },
+  "donut.py": {
+    "expected": "PASS",
+    "criteria": "torus shape"
+  },
+  "snowman.py": {
+    "expected": "PASS",
+    "criteria": "snowman shape"
+  },
+  "simple_cylinder.py": {
+    "expected": "PASS",
+    "criteria": "simple cylinder"
+  },
+  "pyramid.py": {
+    "expected": "PASS",
+    "criteria": "square pyramid shape"
+  },
+  "gear.py": {
+    "expected": "PASS",
+    "criteria": "gear with teeth and center hole"
+  },
+  "hexagonal_nut.py": {
+    "expected": "PASS",
+    "criteria": "hexagonal nut with threaded hole"
+  },
+  "spiral_vase.py": {
+    "expected": "PASS",
+    "criteria": "spiral vase with hollow interior"
+  },
+  "bracket.py": {
+    "expected": "PASS",
+    "criteria": "L-shaped bracket with mounting holes"
+  }
+}
