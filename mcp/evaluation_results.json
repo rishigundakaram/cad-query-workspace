@@ -1,0 +1,98 @@
+{
+  "total_tests": 7,
+  "correct": 6,
+  "accuracy": 85.71428571428571,
+  "results": [
+    {
+      "model": "box.py",
+      "expected": "PASS",
+      "actual": "PASS",
+      "correct": true,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/box.py",
+        "criteria": "simple box with hole",
+        "details": "Basic syntax validation passed"
+      }
+    },
+    {
+      "model": "coffee_mug.py",
+      "expected": "PASS",
+      "actual": "PASS",
+      "correct": true,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/coffee_mug.py",
+        "criteria": "coffee mug with handle",
+        "details": "Basic syntax validation passed"
+      }
+    },
+    {
+      "model": "donut.py",
+      "expected": "PASS",
+      "actual": "PASS",
+      "correct": true,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/donut.py",
+        "criteria": "torus shape",
+        "details": "Basic syntax validation passed"
+      }
+    },
+    {
+      "model": "snowman.py",
+      "expected": "PASS",
+      "actual": "PASS",
+      "correct": true,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/snowman.py",
+        "criteria": "snowman shape",
+        "details": "Basic syntax validation passed"
+      }
+    },
+    {
+      "model": "simple_cylinder.py",
+      "expected": "PASS",
+      "actual": "PASS",
+      "correct": true,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/simple_cylinder.py",
+        "criteria": "simple cylinder",
+        "details": "Basic syntax validation passed"
+      }
+    },
+    {
+      "model": "broken_model.py",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "correct": true,
+      "result": {
+        "status": "FAIL",
+        "message": "Intentionally broken test file",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/broken_model.py",
+        "criteria": "any model",
+        "details": "File marked as broken for testing purposes"
+      }
+    },
+    {
+      "model": "missing_show_object.py",
+      "expected": "FAIL",
+      "actual": "PASS",
+      "correct": false,
+      "result": {
+        "status": "PASS",
+        "message": "CAD model verification completed successfully",
+        "file_path": "/Users/rishigundakaram/Desktop/doodles/ai-3d-print-2/mcp/test_models/missing_show_object.py",
+        "criteria": "simple box",
+        "details": "Basic syntax validation passed"
+      }
+    }
+  ]
+}
