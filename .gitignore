@@ -137,7 +137,17 @@ dmypy.json
 .DS_Store
 Thumbs.db
 
-# Generated CAD outputs
+# CAD/3D outputs
 outputs/
-*/outputs/
+*.stl
+*.step
+*.stp
+*.dxf
+*.svg
+*.amf
+*.3mf
+
+# MCP outputs and logs (for when MCP server runs locally)
+mcp/outputs/
 mcp/test_outputs/
+mcp/*.log
