@@ -8,4 +8,4 @@ top_ball = cq.Workplane("XY").workplane(offset=14).sphere(2.5)
 # Combine all three balls
 result = bottom_ball.union(middle_ball).union(top_ball)
 
-show_object(result)
+show_object(result)  # noqa: F821

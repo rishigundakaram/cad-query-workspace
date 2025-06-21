@@ -147,7 +147,5 @@ outputs/
 *.amf
 *.3mf
 
-# MCP outputs and logs (for when MCP server runs locally)
-mcp/outputs/
-mcp/test_outputs/
-mcp/*.log
+# MCP outputs and logs (for when MCP server runs externally)
+*.log

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ai-3d-print"
 version = "0.1.0"
-description = "AI-powered 3D printing project"
+description = "Claude Code workspace for conversational 3D modeling using CAD-Query"
 requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -17,6 +17,9 @@ classifiers = [
 dependencies = [
     # Claude Code workspace - MCP server handles CAD dependencies
 ]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["CLAUDE.md", "README.md", "docs", "examples"]
 
 [project.optional-dependencies]
 dev = [
@@ -84,11 +87,4 @@ python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 
-[tool.coverage.run]
-source = ["src"]
-branch = true
-
-[tool.coverage.report]
-show_missing = true
-fail_under = 80
 
