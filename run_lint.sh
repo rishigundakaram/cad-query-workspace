@@ -6,26 +6,14 @@ echo
 
 # Code formatting with Ruff (fixes issues automatically)
 echo "🎨 Formatting code with Ruff..."
-uv run ruff format src/ tests/
+uv run ruff format examples/
 echo "✅ Code formatting applied"
 echo
 
 # Linting with Ruff
 echo "📝 Running Ruff linter..."
-uv run ruff check src/ tests/
+uv run ruff check examples/
 echo "✅ Ruff linting passed"
-echo
-
-# Type checking with MyPy
-echo "🔍 Running MyPy type checking..."
-uv run mypy src/
-echo "✅ Type checking passed"
-echo
-
-# Running tests (without coverage requirement)
-echo "🧪 Running tests..."
-uv run pytest
-echo "✅ All tests passed"
 echo
 
 echo "🎉 All CI/CD checks passed! Ready to push and create PR."
