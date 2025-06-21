@@ -1,174 +1,174 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working in this CAD workspace.
 
 ## Project Overview
 
-This is an AI-powered CAD system that enables conversational 3D modeling using CAD-Query. The core innovation is a visual feedback loop where AI can generate parametric CAD code, render multiple viewing angles, inspect the visual output, and iterate on designs based on visual analysis.
+This is a Claude Code workspace for conversational 3D modeling using CAD-Query via MCP (Model Context Protocol). The workspace provides documentation, examples, and structure for generating parametric CAD models that can be exported as STL files for 3D printing.
 
 ## Architecture
 
-The system integrates MCP (Model Context Protocol) for automated CAD verification and includes visualization scripts that wrap CAD-Query's `cq-cli` tool:
+This workspace uses an external CAD-Query MCP server that provides:
 
-- **`mcp/server.py`** - MCP server providing the `cad_verify` tool for automated model validation
-- **`src/ai_3d_print/render_views.py`** - Generates 4 standard orthographic views (top, front, right, isometric) for comprehensive model inspection  
-- **`src/ai_3d_print/view_direction.py`** - Creates custom angle views with arbitrary direction vectors for detailed analysis
+- **`generate_cad_query`** - Tool for generating CAD-Query Python scripts from descriptions
+- **`verify_cad_query`** - Tool for validating generated CAD models before presentation
 
-### CAD-Query Script Requirements
+### Local Resources
 
-All CAD-Query scripts must end with `show_object(result)` to work with `cq-cli`. The CQGI (CadQuery Gateway Interface) system requires this function call to export shapes for processing.
-
-Example structure:
-```python
-import cadquery as cq
-result = cq.Workplane("XY").box(10, 10, 10)
-show_object(result)  # Required for cq-cli
-```
+- **`docs/cadquery/`** - Complete CAD-Query reference documentation for Claude to study
+- **`examples/`** - Sample CAD-Query scripts demonstrating modeling techniques
+- **`outputs/`** - Directory where generated STL files and visualizations are saved
 
 ### CAD Generation Workflow
 
-1. **Generate**: Write parametric CAD-Query Python scripts
-2. **Verify**: Call the `cad_verify` MCP tool before presenting outputs to users
-3. **Iterate**: Repeat steps 1-2 until verify returns success
+1. **Study Documentation**: Reference `docs/cadquery/` to understand CAD-Query syntax and methods
+2. **Review Examples**: Study `examples/` for modeling patterns and best practices
+3. **Generate CAD Code**: Use the `generate_cad_query` MCP tool to create Python scripts
+4. **Verify Models**: Use the `verify_cad_query` MCP tool to validate designs
+5. **Output Files**: MCP server exports STL files to `outputs/` directory
 
-## Essential Commands
+### CAD-Query Script Requirements
 
-### Environment Setup
-```bash
-uv sync  # Install all dependencies including CAD-Query and cq-cli
-uv sync --extra docs  # Install additional documentation generation dependencies
+All CAD-Query scripts must end with `show_object(result)` for MCP server processing:
+
+```python
+import cadquery as cq
+result = cq.Workplane("XY").box(10, 10, 10)
+show_object(result)  # Required for MCP server
 ```
 
-### MCP Server Setup
-```bash
-# See mcp/CLAUDE.md for complete setup instructions
-cd mcp && pip install -r requirements.txt
+## MCP Tools Available
+
+This workspace uses a CAD-Query MCP server that provides these tools:
+
+### `generate_cad_query`
+Generates CAD-Query Python scripts from natural language descriptions.
+
+**Parameters:**
+- `description`: Natural language description of the desired 3D model
+- `parameters`: Optional specific dimensions or constraints
+
+**Usage Example:**
+```python
+# Claude calls this MCP tool
+generate_cad_query(
+    description="Create a coffee mug with a handle, 10cm tall and 8cm diameter",
+    parameters="height=100mm, diameter=80mm, handle_width=15mm"
+)
 ```
 
-### Model Operations
-```bash
-# Export STL for 3D printing
-uv run cq-cli --codec stl --infile examples/box.py --outfile outputs/model.stl
+### `verify_cad_query`
+Validates generated CAD models before presenting to users.
 
-# Export STEP for CAD software
-uv run cq-cli --codec step --infile examples/box.py --outfile outputs/model.step
+**Parameters:**
+- `file_path`: Path to the CAD-Query Python file to verify
+- `verification_criteria`: Description of what aspects to verify
 
-# Generate 4 standard orthographic views (optional)
-uv run python src/ai_3d_print/render_views.py examples/box.py
-
-# Generate custom angle view (optional)
-uv run python src/ai_3d_print/view_direction.py examples/box.py 0.7 0.7 0.2
+**Usage Example:**
+```python
+# Claude calls this MCP tool
+verify_cad_query(
+    file_path="outputs/coffee_mug.py",
+    verification_criteria="coffee mug with handle, 10cm height, 8cm diameter"
+)
 ```
 
-### Development Commands
+## Documentation Resources
+
+### CAD-Query Reference (`docs/cadquery/`)
+
+Complete CAD-Query documentation converted to searchable markdown format:
+
+- **`classreference.md`** - Complete API reference with all classes and methods
+- **`examples.md`** - Comprehensive examples gallery  
+- **`primer.md`** - Core CAD-Query concepts and API layers
+- **`workplane.md`** - Workplane operations and methods
+- **`selectors.md`** - Object selection and filtering
+- **`sketch.md`** - 2D sketching operations
+
+### Example Models (`examples/`)
+
+Study these sample CAD-Query scripts:
+- **`box.py`** - Simple box with hole (basic operations)
+- **`coffee_mug.py`** - Coffee mug with handle (revolve, union operations)
+- **`donut.py`** - Torus shape (revolve operations)
+- **`snowman.py`** - Multi-sphere assembly (assembly modeling)
+
+## Essential Development Commands
+
 ```bash
+# Install workspace dependencies
+uv sync
+
 # Run tests
 uv run pytest
 
-# Run single test
-uv run pytest tests/test_main.py::test_specific_function
-
-# Lint code
-uv run ruff check
-
-# Format code
-uv run ruff format
-
-# Type checking
-uv run mypy src/
+# Code quality checks
+./run_lint.sh
 ```
-
-### CAD-Query Documentation Generation
-
-To improve Claude's understanding of CAD-Query syntax, this project includes tools to generate comprehensive reference documentation from the official CAD-Query documentation.
-
-```bash
-# Generate CAD-Query reference documentation (run when needed)
-cd docs-generation && uv run sphinx-build -M markdown . _build
-```
-
-The generated markdown files provide Claude with:
-- **Complete API reference**: All CAD-Query classes, methods, and functions with examples
-- **Comprehensive examples**: Step-by-step tutorials from simple to complex modeling
-- **Syntax patterns**: Common CAD-Query workflows and best practices
-- **Error guidance**: Troubleshooting and common mistake patterns
-
-Generated documentation files are located in `docs-generation/_build/markdown/` and include:
-- `index.md` - Main documentation overview
-- `primer.md` - Core CAD-Query concepts and API layers
-- `examples.md` - Comprehensive examples gallery
-- `classreference.md` - Complete API reference
-- `quickstart.md` - Getting started guide
-- Additional specialized topics (assemblies, selectors, visualization, etc.)
-
-These files can be read by Claude using the Read tool to improve CAD-Query code generation accuracy.
-
-## Key Dependencies
-
-- **CAD-Query ≥2.4.0**: Parametric 3D CAD modeling library
-- **cq-cli**: Command-line interface for executing CAD-Query scripts (installed from GitHub)
-- **hatchling**: Build backend with direct reference support enabled
-
-The `cq-cli` dependency is installed from GitHub and requires `allow-direct-references = true` in the hatchling configuration.
 
 ## Output Structure
 
-All generated files are placed in the `outputs/` directory:
-- `{model_name}_top.svg` - Top view (0,0,1)
-- `{model_name}_front.svg` - Front view (0,1,0)
-- `{model_name}_right.svg` - Right view (1,0,0)
-- `{model_name}_iso.svg` - Isometric view (1,1,1)
-- `{model_name}_custom.svg` - Custom direction view
+The MCP server generates files in the `outputs/` directory:
+- `{model_name}.py` - Generated CAD-Query Python script
 - `{model_name}.stl` - STL export for 3D printing
 - `{model_name}.step` - STEP export for CAD software
+- `{model_name}_*.svg` - Visualization files (optional)
 
-## MCP Verification Integration
+## Workflow Best Practices
 
-**CRITICAL**: Always use the `cad_verify` MCP tool before presenting CAD outputs to users. This ensures quality control and validation of generated designs.
+### Step 1: Study Documentation
+```python
+# Before generating any CAD model, study the relevant documentation
+# Read docs/cadquery/classreference.md for API methods
+# Read docs/cadquery/examples.md for modeling patterns
+# Study examples/ directory for similar models
+```
 
-## Visual Inspection Capability (Optional)
+### Step 2: Generate CAD Code
+```python
+# Use the generate_cad_query MCP tool with clear descriptions
+generate_cad_query(
+    description="Clear, detailed description of the 3D model",
+    parameters="Specific dimensions and constraints"
+)
+```
 
-When additional visual feedback is needed, the system can generate SVG files containing vector graphics:
-- Solid lines for visible edges (stroke="rgb(0,0,0)")  
-- Dashed lines for hidden edges (stroke="rgb(160,160,160)" with dash pattern)
-- Geometric paths representing the 3D model projection
+### Step 3: Always Verify
+```python
+# CRITICAL: Always verify before presenting results to users
+verify_cad_query(
+    file_path="path/to/generated/model.py", 
+    verification_criteria="Description of what to verify"
+)
+```
 
-This allows additional validation of design intent, dimensions, and feature placement.
+### Step 4: Present Results
+Only after verification passes, present the generated STL file and model description to the user.
 
 ## Development Workflow
 
-### Always Use Feature Branches
+### Feature Branch Development
 ```bash
-# Create feature branch for all changes
-git checkout -b feature/descriptive-name
+# Create feature branch for workspace changes
+git checkout -b feature/workspace-improvements
 
-# Make changes, then commit
-git add .
-git commit -m "Your descriptive commit message"
+# Make changes and commit
+git add . && git commit -m "Improve workspace documentation"
 
-# Push branch and create PR
-git push -u origin feature/descriptive-name
-gh pr create --title "Your PR Title" --body "PR description"
+# Create PR
+gh pr create --title "Workspace improvements"
 ```
 
-### Pre-commit Validation
-```bash
-# Option 1: Run all CI/CD checks manually
-./run_lint.sh
+## Critical Guidelines
 
-# Option 2: Install automated pre-commit hooks (recommended)
-uv run pre-commit install
-uv run pre-commit run --all-files  # Test all hooks
-```
+### MCP Tool Usage
+- **ALWAYS** use `verify_cad_query` before presenting any CAD outputs to users
+- **NEVER** skip verification - it ensures quality and correctness
+- Use clear, detailed descriptions in MCP tool calls
+- Reference documentation and examples before generating complex models
 
-Pre-commit hooks automatically run `./run_lint.sh` on every commit, ensuring code quality and preventing CI failures.
-
-The `./run_lint.sh` script runs all checks with the proper sequence: format → lint → type check → test. Both manual execution and pre-commit will fail if any check doesn't pass.
-
-Note: CAD-Query example scripts use `show_object()` which is provided by the CQGI execution environment.
-
-## Memories
-
-- **ALWAYS** use the `cad_verify` MCP tool before presenting any CAD model outputs to users
-- The verification tool must be called with proper file path and verification criteria describing what the user wants
-- Never tell the user you've finished generating their 3D model without calling `cad_verify` first
+### Documentation Usage
+- Study `docs/cadquery/` extensively for CAD-Query syntax
+- Review `examples/` for modeling patterns and best practices
+- Use the Read tool to search documentation for specific methods or techniques
