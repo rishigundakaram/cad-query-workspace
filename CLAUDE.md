@@ -10,7 +10,7 @@ This is a Claude Code workspace for conversational 3D modeling using CAD-Query v
 
 This workspace uses an external CAD-Query MCP server that provides:
 
-- **`generate_cad_query`** - Tool for generating CAD-Query Python scripts from descriptions
+- **`generate_cad_query`** - Tool for generating CAD-Query Python scripts from descriptions *(currently stub implementation)*
 - **`verify_cad_query`** - Tool for validating generated CAD models before presentation
 
 ### Local Resources
@@ -127,6 +127,8 @@ The MCP server generates files in the `outputs/` directory:
 
 ### Step 2: Generate CAD Code
 ```python
+# NOTE: generate_cad_query is currently a stub implementation
+# For now, manually create CAD-Query scripts based on documentation and examples
 # Use the generate_cad_query MCP tool with clear descriptions
 generate_cad_query(
     description="Clear, detailed description of the 3D model",
